@@ -13,13 +13,20 @@ def main():
 	iterations = 20 
 	acc_array= []
 	arr_seeds = seed_name(iterations)
+	array_model = []
 
 	for i in range(iterations):
 		seed_name_r = arr_seeds[i]
 		dataset_return = load_data_set(dataset_path, seed_name_r)
 		model_result, result_acc = training(dataset_return, model_result, iterations)
+		#arrays con accuracy y modelos 
 		acc_array.append(result_acc)
-	prediction_result = predict([[43.25, -17.35, 7.12,-27.35,-0.103149,0.135681,-34.4]], model_result)
+		array_model.append(model_result)
+	#buscar el mejor acc para utilizar este modelo en prediccion
+	best_acc = acc_array.index(max(acc_array))
+	best_model = array_model[best_acc]
+
+	prediction_result = predict([[43.25, -17.35, 7.12,-27.35,-0.103149,0.135681,-34.4]], best_model)
 	plot_acc(acc_array)
 	print (prediction_result)
 
