@@ -25,8 +25,11 @@ def main():
 	#buscar el mejor acc para utilizar este modelo en prediccion
 	best_acc = acc_array.index(max(acc_array))
 	best_model = array_model[best_acc]
+	#-44.84	-17.44	5.59	-26.47	-0.134308	0.123352	-32.39 -> 1
+	#43.25, -17.35, 7.12,-27.35,-0.103149,0.135681,-34.4 
+	#-46.13	-22.66	4.45	-28.92	-0.073608	0.066467	-35.64 -> 0
 
-	prediction_result = predict([[43.25, -17.35, 7.12,-27.35,-0.103149,0.135681,-34.4]], best_model)
+	prediction_result = predict([[-46.13, -22.66, 4.45, -28.92,-0.073608,0.066467,-35.64]], best_model)
 	plot_acc(acc_array)
 	print (prediction_result)
 
