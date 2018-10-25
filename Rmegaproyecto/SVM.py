@@ -1,7 +1,6 @@
 # import the necessary packages
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
 from sklearn.model_selection import train_test_split
-from sklearn.model_selection import cross_val_score
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -11,7 +10,7 @@ def main():
 	dataset_path = 'Data.csv'
 	#Data
 	#Iteraciones para entrenamiento
-	model_result= create_model(27)
+	model_result= create_model()
 	iterations = 100
 	acc_array= []
 	arr_seeds = seed_name(iterations)
@@ -25,24 +24,14 @@ def main():
 		acc_array.append(result_acc)
 		array_model.append(model_result)
 	#buscar el mejor acc para utilizar este modelo en prediccion
+	print(acc_array)
 	best_acc = acc_array.index(max(acc_array))
-	print("mejor acc: ",best_acc)
 	best_model = array_model[best_acc]
-	pkl_filename = "pickle_KNN.pkl"
+	pkl_filename = "pickle_SVM.pkl"
 	with open(pkl_filename, 'wb') as file:
 		pickle.dump(best_model, file)
-	#print ("best",best_model)
-	print(acc_array)
-	#-44.84	-17.44	5.59	-26.47	-0.134308	0.123352	-32.39 -> 1
-	#43.25, -17.35, 7.12,-27.35,-0.103149,0.135681,-34.4 
-	#-46.13	-22.66	4.45	-28.92	-0.073608	0.066467	-35.64 -> 0	
-	#sub_main = [[-46.13, -22.66, 4.45, -28.92,-0.073608,0.066467,-35.64]]
-	#prediction_result = predict(sub_main, best_model)
-	plot_acc(acc_array)
-	#class_probabilities = best_model.predict_proba(sub_main)
-	#print("prob", class_probabilities)
-	#print (prediction_result)
-
+	
+	#plot_acc(acc_array)
 
 # Import Dataset (esto uso yo para importar CSVs a arrays)
 def load_data_set(path, seed):
@@ -54,14 +43,14 @@ def load_data_set(path, seed):
 	(x_train, x_test, y_train, y_test) = train_test_split(X, y, test_size=0.30, random_state=seed)
 	return x_train, x_test, y_train, y_test
 
-def create_model(neighbors_in):
+def create_model():
 	
 	# los datos tienen que estar en arrays de numpy, de la manera de abajo convierte array normal a numpy si no lo hace como arriba
 	# ------------------------------------------
 	# Scikit Learn Implementation
 	# ------------------------------------------
-	# k-NN
-	return KNeighborsClassifier(n_neighbors=neighbors_in) #el classificador
+	# SVM
+	return SVC(kernel = 'rbf') #el classificador
 	 
 def training(data_input, model, iterations):
 

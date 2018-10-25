@@ -19,4 +19,3 @@ rpart.plot(arbol_2)
 #matriz de confucion 
 prediccion_2 <- predict(arbol_2, newdata = prueba1, type = "class")
 confusionMatrix(prediccion_2, prueba1[["tipo"]])
-s
